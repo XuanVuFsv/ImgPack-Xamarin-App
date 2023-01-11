@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PORO.Views.RegisterPage"
+             xmlns:base="clr-namespace:PORO.Views.Base"
+             xmlns:control ="clr-namespace:PORO.Controls">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="entryStyle" TargetType="control:EntryCustom">
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="PlaceholderColor" Value="Silver"/>
+                <Setter Property="TextColor" Value="Black" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid Margin="10, 0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0"
+               Aspect="AspectFill"
+               HeightRequest="150"
+               WidthRequest="150"
+               HorizontalOptions="Center"
+               Source="logo"
+               VerticalOptions="Center" />
+        <control:EntryCustom EntryBorderColor="Silver"
+                             Grid.Row="2"
+                             Placeholder="User Name*"
+                             Text="{Binding UserName}"
+                             HeightRequest="30"
+                             Style="{StaticResource entryStyle}"/>
+        <control:EntryCustom EntryBorderColor="Silver"
+                             Grid.Row="3"
+                             Placeholder="Email Address*"
+                             Text="{Binding EmailAddress}"
+                             HeightRequest="30"
+                             Style="{StaticResource entryStyle}"/>
+        <control:EntryCustom EntryBorderColor="Silver"
+                             IsPassword="True"
+                             Grid.Row="4"
+                             Placeholder="Password*"
+                             Text="{Binding Password}"
+                             HeightRequest="30"
+                             Style="{StaticResource entryStyle}"/>
+        <control:EntryCustom EntryBorderColor="Silver"
+                             IsPassword="True"
+                             Grid.Row="5"
+                             Placeholder="Confirm Password*"
+                             Text="{Binding ConfirmPassword}"
+                             HeightRequest="30"
+                             Style="{StaticResource entryStyle}"/>
+        <Button Text="Next"
+                TextTransform="None"
+                Grid.Row="7"
+                FontSize="14"
+                FontAttributes="Bold"
+                TextColor="White"
+                CornerRadius="20"
+                Command="{Binding SignUpCommand}"
+                BackgroundColor="#003065" />
+        <Button Text="Go back"
+                TextTransform="None"
+                Grid.Row="8"
+                FontSize="14"
+                FontAttributes="Bold"
+                TextColor="#003065"
+                BorderColor="#003065"
+                BorderWidth="0.5"
+                CornerRadius="20"
+                Command="{Binding BackCommand}"
+                BackgroundColor="White"/>
+    </Grid>
+</ContentPage>

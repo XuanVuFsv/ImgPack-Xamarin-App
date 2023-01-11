@@ -1,0 +1,183 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PORO.Views.SharePage"
+             xmlns:base="clr-namespace:PORO.Views.Base"
+             xmlns:control ="clr-namespace:PORO.Controls"
+             xmlns:pkView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="entryStyle" TargetType="control:EntryCustom">
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="PlaceholderColor" Value="Silver"/>
+                <Setter Property="TextColor" Value="Black" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0"
+              VerticalOptions="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="40" />
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0"
+                   Grid.Row="0"
+                   Aspect="AspectFit"
+                   HeightRequest="30"
+                   HorizontalOptions="Start"
+                   Source="ic_back"
+                   VerticalOptions="Center"
+                   WidthRequest="60">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding BackCommand}" />
+                </Image.GestureRecognizers>
+            </Image>
+            <Label Text="{Binding Name}"
+                   FontSize="16"
+                   TextColor="Black"
+                   HorizontalTextAlignment="Center"
+                   VerticalTextAlignment="Center"
+                   Grid.Column="1"
+                   Grid.Row="0"/>
+            <BoxView BackgroundColor="Silver"
+                     HeightRequest="1"
+                     Grid.Row="1"
+                     Grid.ColumnSpan="3" />
+        </Grid>
+        <ScrollView Grid.Row="1"
+                    Margin="10, 0">
+            <StackLayout>
+                <pkView:PancakeView CornerRadius="20">
+                    <Image Source="{Binding ImageReview}"
+                           HorizontalOptions="Center"
+                           WidthRequest="400"
+                           HeightRequest="450"
+                           Aspect="AspectFill" />
+                </pkView:PancakeView>
+                <Grid HeightRequest="40">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                    </Grid.ColumnDefinitions>
+                    <pkView:PancakeView Grid.Column="0"
+                                        CornerRadius="20">
+                        <Image Source="{Binding Avatar}"
+                               Aspect="AspectFill"
+                               VerticalOptions="FillAndExpand"
+                               HorizontalOptions="FillAndExpand" />
+                    </pkView:PancakeView>
+                    <Label Text="{Binding UserName}"
+                           TextColor="Black"
+                           FontAttributes="Bold"
+                           Margin="10, 0"
+                           FontSize="14"
+                           HorizontalTextAlignment="Start"
+                           VerticalTextAlignment="Center"
+                           Grid.Column="1" />
+                    <Image Source="ic_share"
+                           HeightRequest="30"
+                           WidthRequest="30"
+                           HorizontalOptions="End"
+                           VerticalOptions="Center"
+                           Grid.Column="2">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ShareCommand}" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                </Grid>
+                <StackLayout Margin="0, 10">
+                    <Label Text="{Binding Name}"
+                           TextColor="Black"
+                           FontSize="16"
+                           FontAttributes="Bold" />
+                    <Label Text="{Binding Description}"
+                           TextColor="Black"
+                           FontSize="14" />
+                    <Label Text="{Binding Date}"
+                           TextColor="Black"
+                           FontSize="14" />
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+        <!--<Frame Grid.Row="0"
+                       Margin="10"
+                       Padding="10"
+                       CornerRadius="20"
+                       HasShadow="False"
+                       VerticalOptions="Start"
+                       HorizontalOptions="End">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
+                        </Grid.RowDefinitions>
+                        <Image Grid.Row="0"
+                               HeightRequest="20"
+                               Source="ic_share"
+                               WidthRequest="20">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ShareCommand}" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                        <Image Grid.Row="1"
+                               HeightRequest="20"
+                               Source="ic_change"
+                               WidthRequest="20">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ChangeCommand}" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                        <Image Grid.Row="2"
+                               HeightRequest="20"
+                               Source="ic_delete"
+                               WidthRequest="20">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding DeleteCommand}" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </Grid>
+                </Frame>
+        </Grid>
+        <StackLayout Grid.Row="2"
+                     Margin="0, 10">
+            <Label Text="{Binding Description}"
+                   HeightRequest="30"
+                   TextColor="Black"
+                   FontSize="14" />
+            <Label Text="{Binding Date}"
+                   HeightRequest="20"
+                   TextColor="Black"
+                   FontSize="14" />
+        </StackLayout>
+
+       <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="30" />
+                </Grid.ColumnDefinitions>
+                <Button Text="Share Photo"
+                        TextTransform="None"
+                        Command="{Binding ShareCommand}"
+                        Grid.Column="1"
+                        FontAttributes="Bold"
+                        FontSize="14"
+                        TextColor="White"
+                        CornerRadius="20"
+                        Margin="10"
+                        BackgroundColor="#003065" />
+            </Grid>-->
+    </Grid>
+</ContentPage>

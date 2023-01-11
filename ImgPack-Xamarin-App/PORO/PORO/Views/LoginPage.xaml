@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PORO.Views.LoginPage"
+             xmlns:control ="clr-namespace:PORO.Controls">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="entryStyle" TargetType="control:EntryCustom">
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="PlaceholderColor" Value="Silver"/>
+                <Setter Property="TextColor" Value="Black" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid Margin="10, 0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0"
+               Aspect="AspectFill"
+               HeightRequest="150"
+               WidthRequest="150"
+               HorizontalOptions="Center"
+               Source="logo"
+               VerticalOptions="Center" />
+        <Label Text="LOGIN"
+                   TextColor="#003065"
+                   FontSize="30"
+                   FontAttributes="Bold"
+                   HorizontalTextAlignment="Center"
+                   VerticalTextAlignment="Center"
+                   Grid.Row="1"/>
+        <control:EntryCustom EntryBorderColor="Silver"
+                             Grid.Row="3"
+                             Placeholder="Email Address*"
+                             Text="{Binding EmailAddress}"
+                             HeightRequest="30"
+                             Style="{StaticResource entryStyle}"/>
+        <control:EntryCustom EntryBorderColor="Silver"
+                             IsPassword="True"
+                             Grid.Row="5"
+                             Placeholder="Password*"
+                             Text="{Binding Password}"
+                             HeightRequest="30"
+                             Style="{StaticResource entryStyle}"/>
+        <Button Text="Sign In"
+                    TextTransform="None"
+                    Grid.Row="7"
+                    FontSize="14"
+                    FontAttributes="Bold"
+                    TextColor="White"
+                    CornerRadius="20"
+                    Command="{Binding SignInCommand}"
+                BackgroundColor="#003065"/>
+        <Grid Grid.Row="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Label Text="Create an Account?"
+               Grid.Column="0"
+               TextColor="#003065"
+               FontSize="16"
+               HorizontalTextAlignment="End"
+               VerticalTextAlignment="Center"/>
+            <Label Text="Sign Up"
+               Grid.Column="1"
+               TextColor="#003065"
+               FontSize="16"
+               FontAttributes="Bold"
+               HorizontalTextAlignment="Start"
+               VerticalTextAlignment="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SignUpCommand}"/>
+                </Label.GestureRecognizers>
+            </Label>
+        </Grid>
+    </Grid>
+</ContentPage>

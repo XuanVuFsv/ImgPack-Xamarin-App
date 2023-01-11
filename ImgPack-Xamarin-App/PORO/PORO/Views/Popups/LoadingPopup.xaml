@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PORO.Views.Popups.LoadingPopup"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns:popup="clr-namespace:PORO.Controls">
+    <pages:PopupPage.Animation>
+        <popup:PopupFadeAnimation />
+    </pages:PopupPage.Animation>
+
+    <Grid VerticalOptions="FillAndExpand"
+        HorizontalOptions="FillAndExpand"
+        BackgroundColor="#01ffffff">
+        <Frame BackgroundColor="AliceBlue"
+           VerticalOptions="Center"
+           HorizontalOptions="Center"
+           Padding="10"
+           HasShadow="False">
+            <StackLayout>
+                <ActivityIndicator x:Name="Indicator"
+                           HorizontalOptions="CenterAndExpand"
+                           WidthRequest="45"
+                           HeightRequest="45"
+                           Color="#0099FF"/>
+                <Label x:Name="LabelMessage"
+               TextColor="Black"
+               HorizontalOptions="CenterAndExpand"
+               HorizontalTextAlignment="Center"/>
+            </StackLayout>
+        </Frame>
+    </Grid>
+</pages:PopupPage>

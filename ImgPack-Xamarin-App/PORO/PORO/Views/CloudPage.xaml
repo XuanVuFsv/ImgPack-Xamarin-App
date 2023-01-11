@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PORO.Views.CloudPage">
+    <Grid Margin="0, 10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <WebView VerticalOptions="FillAndExpand"
+             Source="{Binding ItemSellLink}"
+                 Grid.Row="0"/>
+        <Frame BackgroundColor="Gray"
+               Padding="5"
+               Grid.Row="0"
+               HeightRequest="15"
+               WidthRequest="15"
+               VerticalOptions="Start"
+               HorizontalOptions="Start"
+               Margin="5"
+               CornerRadius="15">
+            <Image Source="ic_cancel"
+                   HeightRequest="15"
+                   WidthRequest="15"
+                   Aspect="AspectFill">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding BackCommandReview}"/>
+                </Image.GestureRecognizers>
+            </Image>
+        </Frame>
+    </Grid>
+</ContentPage>

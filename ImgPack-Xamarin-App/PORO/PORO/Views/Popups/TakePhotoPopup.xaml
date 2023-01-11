@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<popup:PopupBasePage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PORO.Views.Popups.TakePhotoPopup"
+             xmlns:popup="clr-namespace:PORO.Controls">
+    <Grid>
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Tapped="ClosedPopupEvent" />
+        </Grid.GestureRecognizers>
+
+        <Frame Padding="20"
+               HasShadow="True"
+               CornerRadius="20"
+               VerticalOptions="CenterAndExpand"
+               BackgroundColor="White"
+               Margin="40,0">
+
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Tapped="DoNothingEvent" />
+            </Frame.GestureRecognizers>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Label Text="Gallery"
+                       TextColor="Black"
+                       FontSize="18"
+                       Grid.Row="0"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center"
+                       Margin="10">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="gallery_tapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
+                <BoxView BackgroundColor="Silver"
+                         HeightRequest="0.5"
+                         Grid.Row="1"/>
+                <Label Text="Camera"
+                       TextColor="Black"
+                       FontSize="18"
+                       Grid.Row="2"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center"
+                       Margin="10">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="camera_tapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
+                <BoxView BackgroundColor="Silver"
+                         HeightRequest="0.5"
+                         Grid.Row="3"/>
+
+            </Grid>
+        </Frame>
+    </Grid>
+</popup:PopupBasePage>

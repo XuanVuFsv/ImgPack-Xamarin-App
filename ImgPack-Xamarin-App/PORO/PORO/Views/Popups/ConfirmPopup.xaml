@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<popup:PopupBasePage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PORO.Views.Popups.ConfirmPopup"
+             xmlns:popup="clr-namespace:PORO.Controls">
+    <popup:PopupBasePage.Resources>
+        <ResourceDictionary>
+
+            <Color x:Key="SeparatorColor">#707070</Color>
+
+            <Style x:Key="Title" TargetType="Label">
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+            </Style>
+
+        </ResourceDictionary>
+    </popup:PopupBasePage.Resources>
+    <Grid>
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Tapped="ClosedPopupEvent" />
+        </Grid.GestureRecognizers>
+
+        <Frame
+            Margin="30,0"
+            Padding="10"
+            BackgroundColor="#F8F8F8"
+            CornerRadius="14"
+            VerticalOptions="CenterAndExpand">
+
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Tapped="DoNothingEvent" />
+            </Frame.GestureRecognizers>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="70"/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0"
+                        x:Name="LabelMessageContent"
+                        Margin="25,15"
+                        Style="{StaticResource Title}"/>
+
+                <!--<BoxView HeightRequest="0.5" Color="{StaticResource SeparatorColor}" />-->
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Text="Accept"
+                            TextColor="White"
+                            TextTransform="None"
+                            BackgroundColor="#003065"
+                            FontSize="13"
+                            Grid.Column="1"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center"
+                            Clicked="Accept_Clicked"
+                            CornerRadius="10"
+                            WidthRequest="100"/>
+                    <Button Text="Cancel"
+                            TextColor="Black"
+                            FontSize="13"
+                            Grid.Column="0"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center"
+                            Clicked="Cancel_Clicked"
+                            BackgroundColor="White"
+                            BorderColor="#003065"
+                            BorderWidth="0.5"
+                            CornerRadius="10"
+                            TextTransform="None"
+                            WidthRequest="100"/>
+                </Grid>
+
+            </Grid>
+        </Frame>
+    </Grid>
+</popup:PopupBasePage>

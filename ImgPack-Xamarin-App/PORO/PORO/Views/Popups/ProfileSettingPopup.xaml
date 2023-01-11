@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<popup:PopupBasePage xmlns="http://xamarin.com/schemas/2014/forms"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                     x:Class="PORO.Views.Popups.ProfileSettingPopup"
+                     xmlns:popup="clr-namespace:PORO.Controls"
+                     xmlns:pkView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView">
+    <Grid>
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Tapped="ClosedPopupEvent" />
+        </Grid.GestureRecognizers>
+
+        <pkView:PancakeView Padding="20"
+               CornerRadius="20, 20, 0, 0"
+               VerticalOptions="EndAndExpand"
+               BackgroundColor="White">
+
+            <pkView:PancakeView.GestureRecognizers>
+                <TapGestureRecognizer Tapped="DoNothingEvent" />
+            </pkView:PancakeView.GestureRecognizers>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Label Text="Profile"
+                       TextColor="Black"
+                       FontSize="18"
+                       VerticalTextAlignment="Center"
+                       HorizontalTextAlignment="Start"
+                       Grid.Row="0"/>
+                <BoxView BackgroundColor="Silver"
+                         Grid.Row="1"
+                         HeightRequest="1" />
+                <Label Text="Edit Profile"
+                       TextColor="Black"
+                       FontAttributes="Bold"
+                       FontSize="16"
+                       Grid.Row="2"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Start"
+                       Margin="10">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="edit_tapped" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label Text="Log Out"
+                       TextColor="Black"
+                       FontAttributes="Bold"
+                       FontSize="16"
+                       Grid.Row="3"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Start"
+                       Margin="10">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="logout_tapped" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Button Text="Close"
+                        WidthRequest="100"
+                        TextTransform="None"
+                        FontSize="16"
+                        CornerRadius="20"
+                        HorizontalOptions="CenterAndExpand"
+                        VerticalOptions="Center"
+                        TextColor="Black"
+                        FontAttributes="Bold"
+                        BorderColor="#003065"
+                        BorderWidth="0.5"
+                        BackgroundColor="White"
+                        Grid.Row="4"/>
+
+            </Grid>
+        </pkView:PancakeView>
+    </Grid>
+</popup:PopupBasePage>

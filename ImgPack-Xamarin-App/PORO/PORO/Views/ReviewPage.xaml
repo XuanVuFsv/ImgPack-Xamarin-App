@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PORO.Views.ReviewPage"
+             xmlns:base="clr-namespace:PORO.Views.Base"
+             xmlns:pkView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="ButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#003065"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="Padding" Value="8,12" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid Margin="10, 0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="70"/>
+        </Grid.RowDefinitions>
+        <base:HeaderView Grid.Row="0"
+                        PageHeaderTitle="Review"
+                        IsSendVisible="False"
+                        IsBackImageVisible="True"
+                        BackImageCommand="{Binding BackCommand}"/>
+
+        <pkView:PancakeView CornerRadius="20"
+                            Grid.Row="1">
+            <Image Source="{Binding ImageReview}"
+                   HorizontalOptions="Center"
+                   WidthRequest="400"
+                   HeightRequest="450"
+                   Aspect="AspectFill"/>
+        </pkView:PancakeView>
+        <Grid Grid.Row="2"
+              VerticalOptions="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Text="Publish Photo"
+                    TextTransform="None"
+                    Grid.Column="0"
+                    Margin="5"
+                    FontSize="14"
+                    FontAttributes="Bold"
+                    TextColor="White"
+                    CornerRadius="20"
+                    Command="{Binding PublishCommand}"
+                    BackgroundColor="#003065"/>
+            <Button Text="Edit Photo"
+                    TextTransform="None"
+                    Grid.Column="1"
+                    Margin="5"
+                    FontSize="14"
+                    FontAttributes="Bold"
+                    BorderWidth="0.7"
+                    TextColor="Black"
+                    CornerRadius="20"
+                    Command="{Binding EditCommand}"
+                    BackgroundColor="White"
+                    BorderColor="#003065"/>
+            <!--<Frame BackgroundColor="White"
+                   BorderColor="Gray"
+                   Grid.Column="1"
+                   CornerRadius="20"
+                   Padding="5"
+                   Margin="5"
+                   HasShadow="False">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding EditCommand}"/>
+                </Frame.GestureRecognizers>
+                <Grid HorizontalOptions="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="ic_edit"
+                           Grid.Column="0"
+                           VerticalOptions="Center"
+                           Aspect="AspectFit"/>
+                    <Label Text="Edit"
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           TextColor="Black"
+                           Grid.Column="1"
+                           VerticalOptions="Center"
+                           HorizontalTextAlignment="Start"/>
+                </Grid>
+            </Frame>-->
+        </Grid>
+    </Grid>
+</ContentPage>

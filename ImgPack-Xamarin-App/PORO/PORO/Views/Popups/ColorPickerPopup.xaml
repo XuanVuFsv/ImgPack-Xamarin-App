@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<popup:PopupBasePage xmlns="http://xamarin.com/schemas/2014/forms"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                     x:Class="PORO.Views.Popups.ColorPickerPopup"
+                     xmlns:colorpicker="clr-namespace:ColorPicker;assembly=ColorPicker"
+                     xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+                     xmlns:popup="clr-namespace:PORO.Controls"
+                     xmlns:pkView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+                     xmlns:xct="http://xamarin.com/schemas/2020/toolkit">
+    <popup:PopupBasePage.Animation>
+        <animations:ScaleAnimation PositionIn="Bottom"
+                                   PositionOut="Bottom"
+                                   DurationIn="400"
+                                   DurationOut="300"
+                                   EasingIn="SinOut"
+                                   EasingOut="SinIn"
+                                   HasBackgroundAnimation="True" />
+    </popup:PopupBasePage.Animation>
+    <popup:PopupBasePage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="SeparatorColor">#707070</Color>
+
+            <Style x:Key="Title"
+                   TargetType="Label">
+                <Setter Property="TextColor"
+                        Value="Black" />
+                <Setter Property="FontSize"
+                        Value="18" />
+                <Setter Property="HorizontalOptions"
+                        Value="CenterAndExpand" />
+                <Setter Property="HorizontalTextAlignment"
+                        Value="Center" />
+            </Style>
+        </ResourceDictionary>
+    </popup:PopupBasePage.Resources>
+    <Grid>
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Tapped="ClosedPopupEvent" />
+        </Grid.GestureRecognizers>
+        <pkView:PancakeView Padding="10"
+                            CornerRadius="20, 20, 0, 0"
+                            VerticalOptions="EndAndExpand"
+                            BackgroundColor="White"
+                            x:Name="popup">
+            <pkView:PancakeView.GestureRecognizers>
+                <TapGestureRecognizer Tapped="DoNothingEvent" />
+            </pkView:PancakeView.GestureRecognizers>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="50" />
+                </Grid.RowDefinitions>
+                <StackLayout Spacing="0"
+                             Grid.Row="0">
+                    <Label x:Name="LabelMessageContent"
+                           Margin="25,15"
+                           Style="{StaticResource Title}"
+                           Text="Color" />
+                    <BoxView HeightRequest="0.5"
+                             Color="{StaticResource SeparatorColor}" />
+                </StackLayout>
+                <colorpicker:ColorWheel x:Name="ColorWheel1"
+                                        ShowAlphaSlider="True"
+                                        ShowLuminositySlider="True"
+                                        ShowLuminosityWheel="True"
+                                        Vertical="False"
+                                        Grid.Row="1"
+                                        SelectedColorChanged="select_color" />
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="ClosedPopupEvent" />
+                        </Grid.GestureRecognizers>
+                        <Label Text="Cancel"
+                               Style="{StaticResource Title}" />
+                    </Grid>
+                    <BoxView WidthRequest="0.5"
+                             Color="{StaticResource SeparatorColor}"
+                             Grid.Column="1" />
+                    <Grid Grid.Column="2">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="Accep_Clicked" />
+                        </Grid.GestureRecognizers>
+                        <Label Text="Done"
+                               Style="{StaticResource Title}" />
+                    </Grid>
+                </Grid>
+            </Grid>
+        </pkView:PancakeView>
+    </Grid>
+</popup:PopupBasePage>

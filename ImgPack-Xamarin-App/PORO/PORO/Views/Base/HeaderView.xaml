@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PORO.Views.Base.HeaderView">
+    <Grid BackgroundColor="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="25" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="25" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Image Source="ic_back"
+               x:Name="backBtn"
+               Grid.Column="0"
+               Grid.Row="0"
+               WidthRequest="25"
+               HorizontalOptions="Start"
+               VerticalOptions="Center">
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding BackCommand}"/>
+            </Image.GestureRecognizers>
+        </Image>
+        <Label x:Name="headerTitle"
+               Grid.Column="1"
+               Grid.Row="0"
+               FontSize="18"
+               HorizontalOptions="CenterAndExpand"
+               LineBreakMode="TailTruncation"
+               TextColor="Black"
+               VerticalOptions="CenterAndExpand" />
+        <Image Source="ic_filter"
+               Grid.Column="2"
+               Grid.Row="0"
+               WidthRequest="25"
+               HorizontalOptions="End"
+               VerticalOptions="Center"
+               x:Name="send">
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding SettingCommand}"/>
+            </Image.GestureRecognizers>
+        </Image>
+        <BoxView BackgroundColor="Silver"
+                 HeightRequest="0.5"
+                 Grid.ColumnSpan="3"
+                 Grid.Row="1"/>
+    </Grid>
+</ContentView>

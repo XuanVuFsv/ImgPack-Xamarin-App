@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<popup:PopupBasePage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PORO.Views.Popups.MessagePopup"
+             xmlns:popup="clr-namespace:PORO.Controls">
+    <popup:PopupBasePage.Resources>
+        <ResourceDictionary>
+
+            <Color x:Key="SeparatorColor">#707070</Color>
+
+            <Style x:Key="Title" TargetType="Label">
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+            </Style>
+
+        </ResourceDictionary>
+    </popup:PopupBasePage.Resources>
+
+    <Grid>
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Tapped="ClosedPopupEvent" />
+        </Grid.GestureRecognizers>
+
+        <Frame
+            Margin="30,0"
+            Padding="10"
+            BackgroundColor="#F8F8F8"
+            CornerRadius="14"
+            VerticalOptions="CenterAndExpand">
+
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Tapped="DoNothingEvent" />
+            </Frame.GestureRecognizers>
+
+            <StackLayout Spacing="0">
+
+                <Label
+                    x:Name="LabelMessageContent"
+                    Margin="25,15"
+                    Style="{StaticResource Title}" />
+
+                <BoxView HeightRequest="0.5" Color="{StaticResource SeparatorColor}" />
+
+                <Label
+                    x:Name="ButtonMessageClose"
+                    HeightRequest="40"
+                    HorizontalTextAlignment="Center"
+                    Text="OK"
+                    TextColor="#007AFF"
+                    VerticalTextAlignment="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="ClosedPopupEvent" />
+                    </Label.GestureRecognizers>
+                </Label>
+
+            </StackLayout>
+        </Frame>
+    </Grid>
+</popup:PopupBasePage>

@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PORO.Views.Register2Page"
+             xmlns:pkView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView">
+    <Grid Margin="10, 0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0"
+               Aspect="AspectFill"
+               HeightRequest="150"
+               WidthRequest="150"
+               HorizontalOptions="Center"
+               Source="logo"
+               VerticalOptions="Center" />
+        <pkView:PancakeView WidthRequest="400"
+                            HeightRequest="450"
+                            Grid.Row="1"
+                            VerticalOptions="StartAndExpand"
+                            HorizontalOptions="CenterAndExpand"
+                            CornerRadius="20">
+            <pkView:PancakeView.Border>
+                <pkView:Border Thickness="1"
+                               Color="Silver" />
+            </pkView:PancakeView.Border>
+            <Grid>
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding AddCommand}" />
+                </Grid.GestureRecognizers>
+                <Label Text="Add Avatar"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       TextColor="Black"
+                       Opacity="0.3"
+                       FontSize="18" />
+                <Image Source="{Binding Avatar}"
+                       Aspect="AspectFill"
+                       HeightRequest="300"
+                       WidthRequest="300" />
+            </Grid>
+        </pkView:PancakeView>
+        <Button Text="Register"
+                TextTransform="None"
+                Grid.Row="2"
+                FontSize="14"
+                FontAttributes="Bold"
+                TextColor="White"
+                CornerRadius="20"
+                Command="{Binding SignUpCommand}"
+                BackgroundColor="#003065" />
+        <Button Text="Go back"
+                TextTransform="None"
+                Grid.Row="3"
+                FontSize="14"
+                FontAttributes="Bold"
+                TextColor="#003065"
+                BorderColor="#003065"
+                BorderWidth="0.5"
+                CornerRadius="20"
+                Command="{Binding BackCommand}"
+                BackgroundColor="White" />
+    </Grid>
+</ContentPage>

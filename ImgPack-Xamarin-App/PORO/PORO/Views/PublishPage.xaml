@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PORO.Views.PublishPage"
+             xmlns:base="clr-namespace:PORO.Views.Base"
+             xmlns:control ="clr-namespace:PORO.Controls"
+             xmlns:pkView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="entryStyle" TargetType="control:EntryCustom">
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="PlaceholderColor" Value="Silver"/>
+                <Setter Property="TextColor" Value="Black" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid Margin="10, 0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="70"/>
+        </Grid.RowDefinitions>
+        <base:HeaderView Grid.Row="0"
+                        PageHeaderTitle="Publish"
+                        IsSendVisible="False"
+                        IsBackImageVisible="True"
+                        BackImageCommand="{Binding BackCommand}"/>
+
+        <pkView:PancakeView CornerRadius="20"
+                            Grid.Row="1">
+            <Image Source="{Binding ImageReview}"
+                   HorizontalOptions="Center"
+                   WidthRequest="400"
+                   HeightRequest="450"
+                   Aspect="AspectFill"/>
+        </pkView:PancakeView>
+        <StackLayout Grid.Row="2"
+                     Margin="0, 10">
+            <control:EntryCustom EntryBorderColor="Silver"
+                                 Placeholder="Name"
+                                 Text="{Binding Name}"
+                                 HeightRequest="40"
+                                 Style="{StaticResource entryStyle}" />
+            <control:EntryCustom EntryBorderColor="Silver"
+                                 Placeholder="Write description.."
+                                 Text="{Binding Description}"
+                                 HeightRequest="100"
+                                 Style="{StaticResource entryStyle}"/>
+        </StackLayout>
+
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="30"/>
+            </Grid.ColumnDefinitions>
+            <Button Text="Publish Photo"
+                    TextTransform="None"
+                    Command="{Binding PostCommand}"
+                    Grid.Column="1"
+                    FontAttributes="Bold"
+                    FontSize="14"
+                    TextColor="White"
+                    CornerRadius="20"
+                    Margin="10"
+                    BackgroundColor="#003065"/>
+        </Grid>
+    </Grid>
+</ContentPage>

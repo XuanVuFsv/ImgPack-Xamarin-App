@@ -1,0 +1,821 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               x:Class="PORO.Views.EditPage"
+               xmlns:converters="clr-namespace:PORO.Converters"
+               xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
+               xmlns:pkView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+               xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+               xmlns:tt="clr-namespace:PORO.Controls"
+               xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             BackgroundColor="Black">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:TrueFalseConverter x:Key="TrueFalseConverter" />
+            <Style x:Key="LabelValueStyle"
+                   TargetType="Label">
+                <Setter Property="FontSize"
+                        Value="10" />
+                <Setter Property="TextColor"
+                        Value="White" />
+                <Setter Property="HorizontalTextAlignment"
+                        Value="Start" />
+                <Setter Property="VerticalTextAlignment"
+                        Value="Center" />
+                <Setter Property="HeightRequest"
+                        Value="30" />
+                <Setter Property="Padding"
+                        Value="2" />
+            </Style>
+            <Style x:Key="ImageValueStyle"
+                   TargetType="Image">
+                <Setter Property="VerticalOptions"
+                        Value="Center" />
+                <Setter Property="HeightRequest"
+                        Value="35" />
+            </Style>
+            <Style x:Key="SliderValueStyle"
+                   TargetType="Slider">
+                <Setter Property="MaximumTrackColor"
+                        Value="Silver" />
+                <Setter Property="MinimumTrackColor"
+                        Value="White" />
+                <Setter Property="VerticalOptions"
+                        Value="Center" />
+                <Setter Property="Maximum"
+                        Value="100" />
+                <Setter Property="Minimum"
+                        Value="-100" />
+            </Style>
+            <Style x:Key="SliderDrawValueStyle"
+                   TargetType="Slider">
+                <Setter Property="MaximumTrackColor"
+                        Value="Silver" />
+                <Setter Property="MinimumTrackColor"
+                        Value="White" />
+                <Setter Property="VerticalOptions"
+                        Value="FillAndExpand" />
+                <Setter Property="Maximum"
+                        Value="100" />
+                <Setter Property="Minimum"
+                        Value="0" />
+            </Style>
+            <Style x:Key="CanvasImageStyle"
+                   TargetType="Image">
+                <Setter Property="Aspect"
+                        Value="AspectFill" />
+                <Setter Property="HeightRequest"
+                        Value="80" />
+                <Setter Property="WidthRequest"
+                        Value="80" />
+            </Style>
+            <Style x:Key="EditImageStyle"
+                   TargetType="Image">
+                <Setter Property="WidthRequest"
+                        Value="20" />
+                <Setter Property="Aspect"
+                        Value="AspectFit" />
+            </Style>
+            <Style x:Key="EditLabelStyle"
+                   TargetType="Label">
+                <Setter Property="FontSize"
+                        Value="10" />
+                <Setter Property="HorizontalTextAlignment"
+                        Value="Center" />
+                <Setter Property="TextColor"
+                        Value="White" />
+            </Style>
+            <Style x:Key="EditBoxviewStyle"
+                   TargetType="BoxView">
+                <Setter Property="BackgroundColor"
+                        Value="White" />
+                <Setter Property="HeightRequest"
+                        Value="1.5" />
+            </Style>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid>
+        <Grid Margin="10"
+              x:Name="EditGrid">
+            <!--<Grid.GestureRecognizers>
+                <SwipeGestureRecognizer Direction="Right" Command="{Binding MenuCommand}"/>
+            </Grid.GestureRecognizers>-->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="80" />
+                <RowDefinition Height="80" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Row="0"
+                  x:Name="Header"
+                  VerticalOptions="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <StackLayout Grid.Column="0"
+                             VerticalOptions="EndAndExpand"
+                             HorizontalOptions="FillAndExpand">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding CancelCommand}" />
+                    </StackLayout.GestureRecognizers>
+                    <Label Text="Cancel"
+                           TextColor="Red"
+                           Grid.Column="0"
+                           HorizontalTextAlignment="Start"
+                           VerticalTextAlignment="End"
+                           FontSize="16" />
+                </StackLayout>
+
+                <StackLayout Grid.Column="2"
+                             VerticalOptions="End"
+                             HorizontalOptions="FillAndExpand">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding DoneCommand}" />
+                    </StackLayout.GestureRecognizers>
+                    <Label Text="Save"
+                           TextColor="White"
+                           FontSize="16"
+                           Grid.Column="2"
+                           HorizontalTextAlignment="End"
+                           VerticalTextAlignment="End" />
+                </StackLayout>
+            </Grid>
+            <Grid Grid.Row="1"
+                  IsEnabled="{Binding DrawVisible}"
+                  x:Name="canvasGrid"
+                  HeightRequest="400"
+                  WidthRequest="300">
+                <skia:SKCanvasView x:Name="canvasView"
+                                   PaintSurface="OnCanvasViewPaintSurface" />
+            </Grid>
+            <Grid Grid.Row="1"
+                  IsEnabled="{Binding DrawVisible}">
+                <ff:CachedImage x:Name="imageView" Aspect="AspectFill" />
+                <skia:SKCanvasView x:Name="drawView"
+                                   PaintSurface="OnDrawViewPaintSurface" />
+                <Grid.Effects>
+                    <tt:TouchEffect Capture="True"
+                                    TouchAction="OnTouchEffectAction" />
+                </Grid.Effects>
+            </Grid>
+            <Grid Grid.Row="2"
+                  IsVisible="{Binding StudioVisible}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0"
+                      VerticalOptions="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="25" />
+                    </Grid.ColumnDefinitions>
+                    <Label x:Name="ContrastValue"
+                           Grid.Column="2"
+                           Style="{StaticResource LabelValueStyle}" />
+                    <Image Source="ic_contrast"
+                           Grid.Column="0"
+                           Style="{StaticResource ImageValueStyle}" />
+                    <Slider Style="{StaticResource SliderValueStyle}"
+                            x:Name="Contrast"
+                            DragCompleted="contrast_Click"
+                            Grid.Column="1"
+                            ThumbImageSource="ic_dot" />
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="25" />
+                    </Grid.ColumnDefinitions>
+                    <Label x:Name="BrightnessValue"
+                           Grid.Column="2"
+                           Style="{StaticResource LabelValueStyle}" />
+                    <Image Source="ic_brightness"
+                           Grid.Column="0"
+                           Style="{StaticResource ImageValueStyle}" />
+                    <Slider Style="{StaticResource SliderValueStyle}"
+                            x:Name="Brightness"
+                            DragCompleted="brightNess_Click"
+                            Grid.Column="1"
+                            ThumbImageSource="ic_dot" />
+                </Grid>
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="25" />
+                    </Grid.ColumnDefinitions>
+                    <Label x:Name="WhiteBalanceValue"
+                           Grid.Column="2"
+                           Style="{StaticResource LabelValueStyle}" />
+                    <Image Source="ic_white_balance"
+                           Grid.Column="0"
+                           Style="{StaticResource ImageValueStyle}" />
+                    <Slider Style="{StaticResource SliderValueStyle}"
+                            DragCompleted="WhiteBalance_click"
+                            Grid.Column="1"
+                            x:Name="WhiteBalance"
+                            ThumbImageSource="ic_dot" />
+                </Grid>
+            </Grid>
+            <ScrollView VerticalOptions="Center"
+                        HorizontalOptions="Fill"
+                        Orientation="Horizontal"
+                        Grid.Row="2"
+                        IsVisible="{Binding CanvasVisible}"
+                        HorizontalScrollBarVisibility="Never">
+                <StackLayout Orientation="Horizontal"
+                             Spacing="3">
+                    <pkView:PancakeView CornerRadius="10"
+                                        Margin="3">
+                        <pkView:PancakeView.Border>
+                            <pkView:Border Color="#003065"
+                                           Thickness="2"
+                                           x:Name="OriginalBorder" />
+                        </pkView:PancakeView.Border>
+                        <Image Source="original"
+                               Style="{StaticResource CanvasImageStyle}"
+                               x:Name="original">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="originalClick" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </pkView:PancakeView>
+                    <pkView:PancakeView CornerRadius="10"
+                                        Margin="2">
+                        <pkView:PancakeView.Border>
+                            <pkView:Border Color="#003065"
+                                           x:Name="blackWhiteBorder" />
+                        </pkView:PancakeView.Border>
+                        <Image Source="blackwhite"
+                               Style="{StaticResource CanvasImageStyle}"
+                               x:Name="blackwhite">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="blackwhiteClick" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </pkView:PancakeView>
+                    <pkView:PancakeView CornerRadius="10"
+                                        Margin="3">
+                        <pkView:PancakeView.Border>
+                            <pkView:Border Color="#003065"
+                                           x:Name="grayScaleBorder" />
+                        </pkView:PancakeView.Border>
+                        <Image Source="grayscale"
+                               Style="{StaticResource CanvasImageStyle}"
+                               x:Name="grayscale">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="grayscaleClick" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </pkView:PancakeView>
+                    <pkView:PancakeView CornerRadius="10"
+                                        Margin="3">
+                        <pkView:PancakeView.Border>
+                            <pkView:Border Color="#003065"
+                                           x:Name="invertBorder" />
+                        </pkView:PancakeView.Border>
+                        <Image Source="invert"
+                               Style="{StaticResource CanvasImageStyle}"
+                               x:Name="invert">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer  Tapped="invertClick" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </pkView:PancakeView>
+                    <pkView:PancakeView CornerRadius="10"
+                                        Margin="3">
+                        <pkView:PancakeView.Border>
+                            <pkView:Border Color="#003065"
+                                           x:Name="swapBorder" />
+                        </pkView:PancakeView.Border>
+                        <Image Source="swap"
+                               Style="{StaticResource CanvasImageStyle}"
+                               x:Name="swap">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="swapClick" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </pkView:PancakeView>
+                    <pkView:PancakeView CornerRadius="10"
+                                        Margin="3">
+                        <pkView:PancakeView.Border>
+                            <pkView:Border Color="#003065"
+                                           x:Name="sepiaBorder" />
+                        </pkView:PancakeView.Border>
+                        <Image Source="sepia"
+                               Style="{StaticResource CanvasImageStyle}"
+                               x:Name="sepia">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="sepiaClick" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </pkView:PancakeView>
+                    <pkView:PancakeView CornerRadius="10"
+                                        Margin="3">
+                        <pkView:PancakeView.Border>
+                            <pkView:Border Color="#003065"
+                                           x:Name="yellowClassicBorder" />
+                        </pkView:PancakeView.Border>
+                        <Image Source="yellowclassic"
+                               Style="{StaticResource CanvasImageStyle}"
+                               x:Name="yellowclassic">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer  Tapped="yellowClassicClick" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </pkView:PancakeView>
+                    <pkView:PancakeView CornerRadius="10"
+                                        Margin="3">
+                        <pkView:PancakeView.Border>
+                            <pkView:Border Color="#003065"
+                                           x:Name="yellowClassicBorder1" />
+                        </pkView:PancakeView.Border>
+                        <Image Source="yellowclassic1"
+                               Style="{StaticResource CanvasImageStyle}"
+                               x:Name="yellowclassic1">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer  Tapped="yellowclassic1Click" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </pkView:PancakeView>
+                    <pkView:PancakeView CornerRadius="10"
+                                        Margin="3">
+                        <pkView:PancakeView.Border>
+                            <pkView:Border Color="#003065"
+                                           x:Name="yellowClassicBorder2" />
+                        </pkView:PancakeView.Border>
+                        <Image Source="yellowclassic2"
+                               Style="{StaticResource CanvasImageStyle}"
+                               x:Name="yellowclassic2">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer  Tapped="yellowclassic2Click" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </pkView:PancakeView>
+                    <pkView:PancakeView CornerRadius="10"
+                                        Margin="3">
+                        <pkView:PancakeView.Border>
+                            <pkView:Border Color="#003065"
+                                           x:Name="sunsetBorder" />
+                        </pkView:PancakeView.Border>
+                        <Image Source="sunset"
+                               Style="{StaticResource CanvasImageStyle}"
+                               x:Name="sunset">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer  Tapped="sunsetClick" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </pkView:PancakeView>
+                    <pkView:PancakeView CornerRadius="10"
+                                        Margin="3">
+                        <pkView:PancakeView.Border>
+                            <pkView:Border Color="#003065"
+                                           x:Name="polaroidBorder" />
+                        </pkView:PancakeView.Border>
+                        <Image Source="polaroid"
+                               Style="{StaticResource CanvasImageStyle}"
+                               x:Name="polaroid">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="polaroidClick" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </pkView:PancakeView>
+                    <pkView:PancakeView CornerRadius="10"
+                                        Margin="3">
+                        <pkView:PancakeView.Border>
+                            <pkView:Border Color="#003065"
+                                           x:Name="redBrowBorder" />
+                        </pkView:PancakeView.Border>
+                        <Image Source="redbrow"
+                               Style="{StaticResource CanvasImageStyle}"
+                               x:Name="redbrow">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer  Tapped="redBrowClick" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </pkView:PancakeView>
+                    <pkView:PancakeView CornerRadius="10"
+                                        Margin="3">
+                        <pkView:PancakeView.Border>
+                            <pkView:Border Color="#003065"
+                                           x:Name="classicBorder" />
+                        </pkView:PancakeView.Border>
+                        <Image Source="classic"
+                               Style="{StaticResource CanvasImageStyle}"
+                               x:Name="classic">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="classicClick" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </pkView:PancakeView>
+                    <pkView:PancakeView CornerRadius="10"
+                                        Margin="3">
+                        <pkView:PancakeView.Border>
+                            <pkView:Border Color="#003065"
+                                           x:Name="blueClassicBorder" />
+                        </pkView:PancakeView.Border>
+                        <Image Source="blueclassic"
+                               Style="{StaticResource CanvasImageStyle}"
+                               x:Name="blueclassic">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer  Tapped="blueClassicClick" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </pkView:PancakeView>
+                    <pkView:PancakeView CornerRadius="10"
+                                        Margin="3">
+                        <pkView:PancakeView.Border>
+                            <pkView:Border Color="#003065"
+                                           x:Name="blueClassicBorder1" />
+                        </pkView:PancakeView.Border>
+                        <Image Source="blueclassic1"
+                               Style="{StaticResource CanvasImageStyle}"
+                               x:Name="blueclassic1">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="blueClassic1Click" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </pkView:PancakeView>
+                    <pkView:PancakeView CornerRadius="10"
+                                        Margin="3">
+                        <pkView:PancakeView.Border>
+                            <pkView:Border Color="#003065"
+                                           x:Name="blueClassicBorder2" />
+                        </pkView:PancakeView.Border>
+                        <Image Source="blueclassic2"
+                               Style="{StaticResource CanvasImageStyle}"
+                               x:Name="blueclassic2">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer  Tapped="blueClassic2Click" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </pkView:PancakeView>
+                    <pkView:PancakeView CornerRadius="10"
+                                        Margin="3">
+                        <pkView:PancakeView.Border>
+                            <pkView:Border Color="#003065"
+                                           x:Name="grayYellowBorder" />
+                        </pkView:PancakeView.Border>
+                        <Image Source="grayyellow"
+                               Style="{StaticResource CanvasImageStyle}"
+                               x:Name="grayyellow">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer  Tapped="grayyellowClick" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </pkView:PancakeView>
+                    <pkView:PancakeView CornerRadius="10"
+                                        Margin="3">
+                        <pkView:PancakeView.Border>
+                            <pkView:Border Color="#003065"
+                                           x:Name="grayYellowBorder1" />
+                        </pkView:PancakeView.Border>
+                        <Image Source="grayyellow1"
+                               Style="{StaticResource CanvasImageStyle}"
+                               x:Name="grayyellow1">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="grayyellowClick1" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </pkView:PancakeView>
+                    <pkView:PancakeView CornerRadius="10"
+                                        Margin="3">
+                        <pkView:PancakeView.Border>
+                            <pkView:Border Color="#003065"
+                                           x:Name="skyBlueBorder" />
+                        </pkView:PancakeView.Border>
+                        <Image Source="skyblue"
+                               Style="{StaticResource CanvasImageStyle}"
+                               x:Name="skyblue">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="skyblueClick" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </pkView:PancakeView>
+                    <pkView:PancakeView CornerRadius="10"
+                                        Margin="3">
+                        <pkView:PancakeView.Border>
+                            <pkView:Border Color="#003065"
+                                           x:Name="redBlueBorder" />
+                        </pkView:PancakeView.Border>
+                        <Image Source="redblue"
+                               Style="{StaticResource CanvasImageStyle}"
+                               x:Name="redblue">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer  Tapped="redblueClick" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </pkView:PancakeView>
+                    <pkView:PancakeView CornerRadius="10"
+                                        Margin="3">
+                        <pkView:PancakeView.Border>
+                            <pkView:Border Color="#003065"
+                                           x:Name="redBlueBorder1" />
+                        </pkView:PancakeView.Border>
+                        <Image Source="redblue1"
+                               Style="{StaticResource CanvasImageStyle}"
+                               x:Name="redblue1">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer  Tapped="redblueClick1" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </pkView:PancakeView>
+                    <pkView:PancakeView CornerRadius="10"
+                                        Margin="3">
+                        <pkView:PancakeView.Border>
+                            <pkView:Border Color="#003065"
+                                           x:Name="blueBorder" />
+                        </pkView:PancakeView.Border>
+                        <Image Source="blue"
+                               Style="{StaticResource CanvasImageStyle}"
+                               x:Name="blue">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer  Tapped="blueClick" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </pkView:PancakeView>
+                    <pkView:PancakeView CornerRadius="10"
+                                        Margin="3">
+                        <pkView:PancakeView.Border>
+                            <pkView:Border Color="#003065"
+                                           x:Name="blueBorder1" />
+                        </pkView:PancakeView.Border>
+                        <Image Source="blue1"
+                               Style="{StaticResource CanvasImageStyle}"
+                               x:Name="blue1">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer  Tapped="blueClick1" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </pkView:PancakeView>
+                    <pkView:PancakeView CornerRadius="10"
+                                        Margin="3">
+                        <pkView:PancakeView.Border>
+                            <pkView:Border Color="#003065"
+                                           x:Name="greenVioletBorder" />
+                        </pkView:PancakeView.Border>
+                        <Image Source="greenviolet"
+                               Style="{StaticResource CanvasImageStyle}"
+                               x:Name="greenviolet">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="greenvioletClick" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </pkView:PancakeView>
+                </StackLayout>
+            </ScrollView>
+            <Grid Grid.Row="2"
+                  IsVisible="{Binding DrawVisible}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="25" />
+                </Grid.RowDefinitions>
+                <pkView:PancakeView Grid.Row="0"
+                                    HorizontalOptions="Center"
+                                    CornerRadius="10"
+                                    Padding="5">
+                    <pkView:PancakeView.Border>
+                        <pkView:Border Color="Gray"
+                                       Thickness="1" />
+                    </pkView:PancakeView.Border>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <StackLayout Grid.Column="0"
+                                     VerticalOptions="Center"
+                                     HorizontalOptions="Center">
+                            <Image Source="ic_draw"
+                                   Aspect="AspectFit"
+                                   HeightRequest="15"
+                                   WidthRequest="15" />
+                            <BoxView BackgroundColor="White"
+                                     HeightRequest="1"
+                                     x:Name="drawVisile" />
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="draw" />
+                            </StackLayout.GestureRecognizers>
+                        </StackLayout>
+                        <pkView:PancakeView HeightRequest="15"
+                                            WidthRequest="15"
+                                            x:Name="color"
+                                            CornerRadius="8"
+                                            Grid.Column="1"
+                                            VerticalOptions="Center"
+                                            HorizontalOptions="Center">
+                            <pkView:PancakeView.Border>
+                                <pkView:Border Color="White"
+                                               Thickness="1" />
+                            </pkView:PancakeView.Border>
+                            <pkView:PancakeView.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="colorPicker" />
+                            </pkView:PancakeView.GestureRecognizers>
+                        </pkView:PancakeView>
+                        <StackLayout Grid.Column="2"
+                                     VerticalOptions="Center"
+                                     HorizontalOptions="Center">
+                            <Image Source="ic_erase"
+                                   Aspect="AspectFit"
+                                   HeightRequest="15"
+                                   WidthRequest="15" />
+                            <BoxView BackgroundColor="White"
+                                     HeightRequest="1"
+                                     x:Name="eraserVisile" />
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="erase" />
+                            </StackLayout.GestureRecognizers>
+                        </StackLayout>
+                        <StackLayout Grid.Column="3"
+                                     VerticalOptions="Center"
+                                     HorizontalOptions="Center"
+                                     x:Name="clear">
+                            <Image Source="ic_reset"
+                                   Aspect="AspectFit"
+                                   HeightRequest="15"
+                                   WidthRequest="15" />
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="Clear_Clicked" />
+                            </StackLayout.GestureRecognizers>
+                        </StackLayout>
+                        <StackLayout Grid.Column="4"
+                                     VerticalOptions="Center"
+                                     HorizontalOptions="Center"
+                                     x:Name="undo">
+                            <Image Source="ic_undo"
+                                   Aspect="AspectFit"
+                                   HeightRequest="15"
+                                   WidthRequest="15" />
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="Undo_Clicked" />
+                            </StackLayout.GestureRecognizers>
+                        </StackLayout>
+                        <StackLayout Grid.Column="5"
+                                     VerticalOptions="Center"
+                                     HorizontalOptions="Center"
+                                     x:Name="redo">
+                            <Image Source="ic_redo"
+                                   Aspect="AspectFit"
+                                   HeightRequest="15"
+                                   WidthRequest="15" />
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="Redo_Clicked" />
+                            </StackLayout.GestureRecognizers>
+                        </StackLayout>
+                    </Grid>
+                </pkView:PancakeView>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="25" />
+                    </Grid.ColumnDefinitions>
+                    <Label x:Name="PenSizeValue"
+                           Grid.Column="1"
+                           Style="{StaticResource LabelValueStyle}" />
+                    <Slider VerticalOptions="Center"
+                            ThumbImageSource="ic_dot"
+                            Grid.Column="0"
+                            x:Name="PenSize"
+                            DragCompleted="PenSizeClicked"
+                            Style="{StaticResource SliderDrawValueStyle}" />
+                </Grid>
+
+            </Grid>
+            <Grid Grid.Row="3"
+                  Margin="3"
+                  VerticalOptions="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <StackLayout Grid.Column="0">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding CanvasCommand}" />
+                    </StackLayout.GestureRecognizers>
+                    <Image Source="ic_color"
+                           WidthRequest="20"
+                           Aspect="AspectFit" />
+                    <Label Text="Canvas"
+                           Style="{StaticResource EditLabelStyle}" />
+                    <BoxView Style="{StaticResource EditBoxviewStyle}"
+                             IsVisible="{Binding CanvasVisible}" />
+                </StackLayout>
+                <StackLayout Grid.Column="1">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding FilterCommand}" />
+                    </StackLayout.GestureRecognizers>
+                    <Image Source="ic_filter"
+                           WidthRequest="20"
+                           Aspect="AspectFit" />
+                    <Label Text="Studio"
+                           Style="{StaticResource EditLabelStyle}" />
+                    <BoxView Style="{StaticResource EditBoxviewStyle}"
+                             IsVisible="{Binding StudioVisible}" />
+                </StackLayout>
+                <StackLayout Grid.Column="2">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding DrawCommand}" />
+                    </StackLayout.GestureRecognizers>
+                    <Image Source="ic_draw"
+                           WidthRequest="20"
+                           Aspect="AspectFit" />
+                    <Label Text="Drawing"
+                           Style="{StaticResource EditLabelStyle}" />
+                    <BoxView Style="{StaticResource EditBoxviewStyle}"
+                             IsVisible="{Binding DrawVisible}" />
+                </StackLayout>
+                <StackLayout Grid.Column="3">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Crop_Click" />
+                    </StackLayout.GestureRecognizers>
+                    <Image Source="ic_crop"
+                           WidthRequest="20"
+                           Aspect="AspectFit" />
+                    <Label Text="Crop"
+                           Style="{StaticResource EditLabelStyle}" />
+                    <BoxView Style="{StaticResource EditBoxviewStyle}"
+                             IsVisible="{Binding CropVisible}" />
+                </StackLayout>
+            </Grid>
+            <!--<ScrollView Grid.Row="3"
+                        Orientation="Horizontal"
+                        HorizontalScrollBarVisibility="Never"
+                        Margin="3"
+                        VerticalOptions="Center">
+                <StackLayout Orientation="Horizontal">
+                    <StackLayout WidthRequest="70">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding CanvasCommand}" />
+                        </StackLayout.GestureRecognizers>
+                        <Image Source="ic_color"
+                               WidthRequest="20"
+                               Aspect="AspectFit" />
+                        <Label Text="Canvas"
+                               Style="{StaticResource EditLabelStyle}" />
+                        <BoxView Style="{StaticResource EditBoxviewStyle}"
+                                 IsVisible="{Binding CanvasVisible}" />
+                    </StackLayout>
+                    <StackLayout WidthRequest="70">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding FilterCommand}" />
+                        </StackLayout.GestureRecognizers>
+                        <Image Source="ic_filter"
+                               WidthRequest="20"
+                               Aspect="AspectFit" />
+                        <Label Text="Studio"
+                               Style="{StaticResource EditLabelStyle}" />
+                        <BoxView Style="{StaticResource EditBoxviewStyle}"
+                                 IsVisible="{Binding StudioVisible}" />
+                    </StackLayout>
+                    <StackLayout WidthRequest="70">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding DrawCommand}" />
+                        </StackLayout.GestureRecognizers>
+                        <Image Source="ic_draw"
+                               WidthRequest="20"
+                               Aspect="AspectFit" />
+                        <Label Text="Drawing"
+                               Style="{StaticResource EditLabelStyle}" />
+                        <BoxView Style="{StaticResource EditBoxviewStyle}"
+                                 IsVisible="{Binding DrawVisible}" />
+                    </StackLayout>
+                    <StackLayout WidthRequest="70">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="Crop_Click" />
+                        </StackLayout.GestureRecognizers>
+                        <Image Source="ic_crop"
+                               WidthRequest="20"
+                               Aspect="AspectFit" />
+                        <Label Text="Crop"
+                               Style="{StaticResource EditLabelStyle}" />
+                        <BoxView Style="{StaticResource EditBoxviewStyle}"
+                                 IsVisible="{Binding CropVisible}" />
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>-->
+        </Grid>
+        <ActivityIndicator VerticalOptions="Center"
+                           x:Name="Indicator"
+                           IsRunning="{Binding IsRunning}"
+                           HorizontalOptions="CenterAndExpand"
+                           WidthRequest="40"
+                           HeightRequest="40"
+                           Color="White" />
+    </Grid>
+
+</ContentPage>
